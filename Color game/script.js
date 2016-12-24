@@ -1,12 +1,5 @@
-var colors = [
-  "rgb(255, 0, 0)",
-  "rgb(255, 255, 0)",
-  "rgb(255, 0, 255)",
-  "rgb(0, 255, 255)",
-  "rgb(255, 200, 255)",
-  "rgb(100, 100, 100)"
-];
-
+var colors = generateRandomColors(6);
+var h1 = document.querySelector("h1");
 var messageDisplay = document.getElementById('message');
 var pickedColor = pickColor();
 var colorDisplay = document.getElementById('colorDisplay');
@@ -40,9 +33,33 @@ function changeColors(color) {
     //change each color to match color
     squares[i].style["background-color"] = color;
   }
+    h1.style.background = color;
 }
 
 function pickColor() {
   var index = Math.floor(Math.random() * colors.length);
   return colors[index];
+}
+
+function generateRandomColors(num) {
+  //make an array
+  var arr = [];
+  //add num random colors to array
+  for(var i = 0; i < num; i++) {
+    //get random color & push into array
+    arr.push(randomColor());
+  }
+  //return said array
+  return arr;
+}
+
+function randomColor() {
+  // pick a red from 0 - 255
+  var red = Math.floor(Math.random() * 256);
+  // pick a green from 0 - 255
+  var green = Math.floor(Math.random() * 256);
+  // pick a blue from 0 - 255
+  var blue = Math.floor(Math.random() * 256);
+
+  return "rgb(" + red + ", " + green + ", " + blue + ")";
 }
