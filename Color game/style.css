@@ -19,6 +19,9 @@ h1 {
   margin: 1.66%;
 }
 
-span {
-  color: white;
+#stripe {
+  background: white;
+  height: 30px;
+  text-align: center;
+  color: black;
 }
