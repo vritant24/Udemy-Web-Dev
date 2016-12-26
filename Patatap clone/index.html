@@ -3,8 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>Patatap Clone</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/style.css">
+    <script type="text/javascript" src="assets/js/lib/paperjs-v0.10.2/dist/paper-full.min.js"></script>
+    <script type="text/paperscript" canvas="myCanvas">
+      function onKeyDown(event) {
+        var maxPoint = new Point(view.size.width, view.size.height);
+        var randomPoint = Point.random();
+        var point = maxPoint * randomPoint;
+        new Path.Circle(point, 10).fillColor = "orange";
+      }
+    </script>
   </head>
   <body>
-
+    <canvas id="myCanvas" resize></canvas>
   </body>
 </html>
