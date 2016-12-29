@@ -2,14 +2,15 @@ var express = require("express");
 var app = express();
 
 app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 app.get("/", function(req, res) {
-  res.render("home.ejs");
+  res.render("home");
 });
 
 app.get("/bro/:name", function(req, res) {
   var nameBro = req.params.name;
-  res.render("bro.ejs", {name: nameBro});
+  res.render("bro", {name: nameBro});
 });
 
 app.get("/posts", function(req, res) {
@@ -18,7 +19,7 @@ app.get("/posts", function(req, res) {
     {title: "Post 2", author: "BV"},
     {title: "Post 3", author: "BB"}
   ];
-  res.render("posts.ejs", {posts: posts});
+  res.render("posts", {posts: posts});
 });
 
 
