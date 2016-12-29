@@ -170,11 +170,20 @@
 
       function onKeyDown(event) {
         var maxPoint = new Point(view.size.width, view.size.height);
+        var center = new Point(view.size.width/2, view.size.height/2);
         var randomPoint = Point.random();
         var point = maxPoint * randomPoint;
         var circle = new Path.Circle(point, 500);
         circle.fillColor = keyData[event.key].color;
         arr.push(circle);
+        // var point1 = maxPoint * randomPoint;
+        // var point2 = maxPoint * randomPoint;
+        // var point3 = maxPoint * randomPoint;
+        // var arc = new Path.Arc(center, point2, point1);
+        // //console.log(point1, point2, point3);
+        // arc.strokeColor = "#ac4a56";
+        // arc.strokeWidth = 10;
+        // arr.push(arc);
         keyData[event.key].sound.play();
       }
 
@@ -182,6 +191,7 @@
         for(var i = 0; i < arr.length; i++) {
           arr[i].scale(.9);
           arr[i].fillColor.hue += 1;
+          //arr[i].strokeColor.hue += 1;
           if(arr[i].area < 1){
           	arr[i].remove();
             arr.splice(i, 1);
