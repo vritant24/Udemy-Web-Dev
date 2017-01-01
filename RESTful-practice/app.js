@@ -96,7 +96,14 @@ app.put("/blogs/:id", function(req, res) {
 
 //DELETE ROUTE
 app.delete("/blogs/:id", function(req, res) {
-  res.send("You have reached destroyed route");
+  //destroy blog
+  Blog.findByIdAndRemove(req.params.id, function(err) {
+    if(err) {
+      res.redirect("/blogs");
+    } else {
+      res.redirect("/blogs");
+    }
+  });
 });
 
 var listener = app.listen(8000, function() {
