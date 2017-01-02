@@ -9,21 +9,6 @@ seedDB();
 mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
-// Campground.create(
-//   {
-//     name: "Mavericks",
-//     image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT07x-BklL_YEC6LFNQKYgZ8Vq-jEPk6viePXr-3rAiUwpvdGAquw",
-//     description: "Also an operating system version"
-//   }, function(err, campground) {
-//       if(err) {
-//         console.log(err);
-//       } else {
-//         console.log("Created a campground");
-//         console.log(campground);
-//       }
-//   }
-// );
-
 
 app.get("/", function(req, res) {
   res.render("landing");
@@ -69,7 +54,7 @@ app.get("/campgrounds/new", function(req, res) {
 //SHOW ROUTE
 app.get("/campgrounds/:id", function(req, res) {
   //find campground with provided id
-  Campground.findById(req.params.id, function(err, foundCamp) {
+  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp) {
     if(err) {
       console.log(err);
     } else {
