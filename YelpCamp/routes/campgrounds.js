@@ -14,7 +14,6 @@ router.get("/", function(req, res) {
       res.render("campgrounds/index", {campgrounds: allCampgrounds, currentUser: req.user});
     }
   });
-  //res.render("campgrounds", {campgrounds: campgrounds});
 });
 
 //CREATE ROUTE Campground
