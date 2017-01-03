@@ -10,13 +10,15 @@ var express                 = require("express"),
 mongoose.connect("mongodb://localhost/auth_app_demo");
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(passport.initialize());
-app.use(passport.session());
+
 app.use(require("express-session")({
     secret: "bomboklaa",
     resave: false,
     saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 passport.serializeUser(User.serializeUser());
@@ -30,7 +32,7 @@ app.get("/", function(req, res) {
   res.render("home");
 });
 
-app.get("/secret", function(req, res) {
+app.get("/secret", isLoggedIn, function(req, res) {
   res.render("secret");
 });
 
@@ -67,6 +69,20 @@ app.post("/login", passport.authenticate("local", {
 }), function(req, res) {
 
 });
+
+//LOGOUT ROUTE
+app.get("/logout", function(req, res) {
+  req.logout();
+  res.redirect("/");
+});
+
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect("/login");
+  }
+}
 
 var listener = app.listen(8000, function() {
   console.log("server has started at " + listener.address().port);
