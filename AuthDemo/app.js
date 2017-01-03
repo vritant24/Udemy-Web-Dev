@@ -18,9 +18,10 @@ app.use(require("express-session")({
     saveUninitialized: false
 }));
 
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+passport.use(new LocalStrategy(User.authenticate()));
 
 //================
 //    ROUTES
@@ -33,6 +34,7 @@ app.get("/secret", function(req, res) {
   res.render("secret");
 });
 
+//REGISTER ROUTES
 //user sign up form
 app.get("/register", function(req, res) {
   res.render("register");
@@ -50,6 +52,20 @@ app.post("/register", function(req, res) {
       });
     }
   });
+});
+
+//LOGIN ROUTES
+//user login form
+app.get("/login", function(req, res) {
+  res.render("login");
+});
+
+//handle user login
+app.post("/login", passport.authenticate("local", {
+  successRedirect: "/secret",
+  failureRedirect: "/login"
+}), function(req, res) {
+
 });
 
 var listener = app.listen(8000, function() {
