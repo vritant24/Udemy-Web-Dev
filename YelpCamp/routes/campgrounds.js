@@ -11,7 +11,7 @@ router.get("/", function(req, res) {
     if(err) {
       console.log(err);
     } else {
-      res.render("campgrounds/index", {campgrounds: allCampgrounds, currentUser: req.user});
+      res.render("campgrounds", {campgrounds: allCampgrounds, currentUser: req.user});
     }
   });
 });
@@ -34,8 +34,7 @@ router.post("/", isLoggedIn, function(req, res) {
       console.log(err);
     } else {
       //redirect to campgrounds page
-      console.log("here is the error =======================");
-      res.redirect("campgrounds/index");
+      res.redirect("campgrounds");
     }
   });
 });
