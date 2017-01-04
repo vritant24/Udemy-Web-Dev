@@ -17,12 +17,16 @@ router.get("/", function(req, res) {
 });
 
 //CREATE ROUTE Campground
-router.post("/", function(req, res) {
+router.post("/", isLoggedIn, function(req, res) {
   //get data from form and add to campgrounds array
   var name = req.body.name;
   var img = req.body.image;
   var desc = req.body.description;
-  var newCampground = {name: name, image: img, description: desc};
+  var author = {
+    id: req.user._id,
+    username: req.user.username
+  };
+  var newCampground = {name: name, image: img, description: desc, author: author};
 
   //create a new campground and save to DB
   Campground.create(newCampground, function(err, newCamp) {
@@ -30,13 +34,14 @@ router.post("/", function(req, res) {
       console.log(err);
     } else {
       //redirect to campgrounds page
+      console.log("here is the error =======================");
       res.redirect("campgrounds/index");
     }
   });
 });
 
 //NEW ROUTE Campground
-router.get("/new", function(req, res) {
+router.get("/new", isLoggedIn, function(req, res) {
   res.render("campgrounds/new");
 });
 
@@ -51,5 +56,17 @@ router.get("/:id", function(req, res) {
     }
   });
 });
+
+
+//==================
+//     MIDDLEWARE
+//==================
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect("/login");
+  }
+}
 
 module.exports = router;
