@@ -58,6 +58,18 @@ router.get("/:id", function(req, res) {
 
 //EDIT ROUTE CAMPGROUND
 router.get("/:id/edit", function(req, res) {
+
+  if(req.isAuthenticated()) {
+    if(req.isAuthenticated()) {
+      return next();
+    } else {
+      res.redirect("/login");
+    }
+  } else {
+    console.log("you need to be logged in");
+    res.send("you need to be logged in");
+  }
+
   Campground.findById(req.params.id, function(err, foundCamp) {
     if(err) {
       console.log("err");
@@ -82,6 +94,17 @@ router.put("/:id", function(req, res) {
   //redirect to show page
 });
 
+//DESTROY ROUTE
+router.delete("/:id", function(req, res) {
+  Campground.findByIdAndRemove(req.params.id, function(err) {
+    if(err) {
+      console.log(err);
+      res.redirect("/campgrounds");
+    } else {
+      res.redirect("/campgrounds");
+    }
+  });
+});
 
 //==================
 //     MIDDLEWARE
