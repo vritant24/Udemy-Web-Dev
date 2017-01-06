@@ -22,6 +22,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
   Campground.findById(req.params.id, function(err, campground) {
     if(err) {
       console.log(err);
+      req.flash("error", "failed to create comment");
       res.redirect("/campgrounds");
     } else {
       //create new comment
@@ -37,6 +38,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
           campground.comments.push(comment);
           campground.save();
           //redirect to campground showpage
+          req.flash("success", "added comment");
           res.redirect("/campgrounds/" + campground._id);
         }
       });
