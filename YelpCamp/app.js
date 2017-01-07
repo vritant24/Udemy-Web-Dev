@@ -16,7 +16,8 @@ var commentRoutes     = require("./routes/comments"),
     campgroundRoutes  = require("./routes/campgrounds"),
     indexRoutes       = require("./routes/index");
 
-mongoose.connect("mongodb://localhost/yelp_camp");
+//mongoose.connect("mongodb://localhost/yelp_camp");
+mongoose.connect("mongodb://vritant:password@ds157258.mlab.com:57258/yelpcamp");
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -48,6 +49,8 @@ app.use("/campgrounds", campgroundRoutes); // appends "/campgrounds" to all rout
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 //=============================================================
-var listener = app.listen(8000, function() {
-  console.log("server has started at " + listener.address().port);
-});
+// var listener = app.listen(8000, function() {
+//   console.log("server has started at " + listener.address().port);
+// });
+
+app.listen(process.env.PORT, process.env.IP);
